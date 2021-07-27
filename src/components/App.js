@@ -10,7 +10,6 @@ const App = () => {
   const [messages, setMessages] = useState([]);
   const [error, setError] = useState(null);
   const [count, setCount] = useState(0);
-  const [append, setAppend] = useState(false);
 
   const fetchMessages = async () => {
     try {
@@ -26,7 +25,6 @@ const App = () => {
     } catch (err) {
       setError(err?.data?.response?.message || "Something went wrong!");
     } finally {
-      setAppend(false);
       setLoading(false);
     }
   };
@@ -34,12 +32,6 @@ const App = () => {
   useEffect(() => {
     fetchMessages();
   }, []);
-
-  useEffect(() => {
-    if (append) {
-      fetchMessages();
-    }
-  }, [append]);
 
   if (error) {
     return <div>Error while loading messages</div>;
@@ -52,8 +44,8 @@ const App = () => {
         <Messages
           data={messages}
           count={count}
-          handleAppendList={(index) => {
-            setAppend(true);
+          handleAppendList={() => {
+            fetchMessages();
           }}
         />
       </MessageContainer>
