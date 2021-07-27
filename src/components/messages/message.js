@@ -5,11 +5,8 @@ import styled from "styled-components";
 import useOnScreen from "../../hooks/useOnScreen";
 
 const Message = ({ item, index, count, handleAppendList }) => {
-  console.log(item);
   const ref = useRef();
   const isVisible = useOnScreen(ref);
-
-  console.log(item.senderAccountObj.profilePic);
 
   useEffect(() => {
     if (index + 1 >= count && ref && isVisible) {
